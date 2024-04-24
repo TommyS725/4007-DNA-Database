@@ -21,6 +21,9 @@ def upload_file(document_id:str):
     if not zipped_data:
         return 'No data in request', 400
     filename = secure_filename(f'{document_id}.zip')
+    # Create the storage directory if it does not exist
+    if not os.path.exists(storage_dir):
+        os.makedirs(storage_dir)
     with open(os.path.join(storage_dir, filename), 'wb') as f:
         f.write(zipped_data)
     return {'success':True}, 200
